@@ -3,7 +3,7 @@ package com.codecool.shitwish.order.service;
 import com.codecool.shitwish.order.model.Order;
 import com.codecool.shitwish.order.repository.OrderRepo;
 import org.springframework.stereotype.Service;
-
+import java.util.*;
 @Service
 public class OrderService {
 
@@ -13,11 +13,18 @@ public class OrderService {
         this.orderRepo = orderRepo;
     }
 
-    public Order addProductToOrder(Long productId){
-        
+    public Order addProductToOrder(Long productId,Long userId){
+
+        List<Order> orderList = orderRepo.findOrdersByUserIdAndStatus(userId, "OPEN");
+        Order currentOrder;
+        if(orderList.isEmpty()){
+            currentOrder = new Order(userId);
+        } else {
+            currentOrder = orderList.get(0);
+        }
+        currentOrder.addProductId(productId);
+        orderRepo.save(currentOrder);
+        return currentOrder;
     }
-
-
-
 
 }
