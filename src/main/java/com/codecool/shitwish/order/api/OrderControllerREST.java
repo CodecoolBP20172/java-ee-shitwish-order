@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @RestController
@@ -17,8 +18,8 @@ public class OrderControllerREST {
     OrderService orderService;
 
     @PutMapping(value = "/add-product-to-order", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity addProductToOrder(@RequestAttribute("productId") Long productId, @RequestAttribute("userId") Long userId ){
-        Order order = orderService.addProductToOrder(productId, userId);
+    public ResponseEntity addProductToOrder(HttpServletRequest request){
+        Order order = orderService.addProductToOrder(Long.parseLong(request.getParameter("productId")), Long.parseLong(request.getParameter("userId")));
         return ResponseEntity.ok(order);
     }
 
