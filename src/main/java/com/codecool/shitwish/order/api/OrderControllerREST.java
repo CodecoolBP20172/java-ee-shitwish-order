@@ -17,7 +17,7 @@ public class OrderControllerREST {
     OrderService orderService;
 
     @PutMapping(value = "/add-product-to-order", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity addProductToOrder(@RequestParam("productId") Long productId, @RequestParam Long userId ){
+    public ResponseEntity addProductToOrder(@RequestAttribute("productId") Long productId, @RequestAttribute("userId") Long userId ){
         Order order = orderService.addProductToOrder(productId, userId);
         return ResponseEntity.ok(order);
     }
