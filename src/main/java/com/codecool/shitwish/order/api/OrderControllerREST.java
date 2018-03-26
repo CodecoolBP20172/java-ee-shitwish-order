@@ -17,10 +17,21 @@ public class OrderControllerREST {
     @Autowired
     OrderService orderService;
 
-    @PostMapping(value = "/add-product-to-order", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(value = "/add-product-to-order", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity addProductToOrder(@RequestBody OrderRequest request){
-        System.out.println(request.getProductId());
         Order order = orderService.addProductToOrder(request.getProductId(), request.getUserId());
+        return ResponseEntity.ok(order);
+    }
+
+    @DeleteMapping(value = "/delete-product-from-order", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity deleteProductFromOrder(@RequestBody OrderRequest request){
+        Order order = orderService.deleteProductFromOrder(request.getProductId(), request.getUserId());
+        return ResponseEntity.ok(order);
+    }
+
+    @PutMapping(value = "/close-order/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity closeOrder(@PathVariable Long userId){
+        Order order = orderService.closeOrder(userId);
         return ResponseEntity.ok(order);
     }
 

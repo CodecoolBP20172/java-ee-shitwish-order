@@ -27,4 +27,31 @@ public class OrderService {
         return currentOrder;
     }
 
+    public Order deleteProductFromOrder(Long productId,Long userId){
+
+        List<Order> orderList = orderRepo.findOrdersByUserIdAndStatus(userId, "OPEN");
+        Order currentOrder;
+        if(orderList.isEmpty()){
+            throw new RuntimeException();
+        } else {
+            currentOrder = orderList.get(0);
+        }
+        currentOrder.removeProductId(productId);
+        orderRepo.save(currentOrder);
+        return currentOrder;
+    }
+
+    public Order closeOrder(Long userId){
+        List<Order> orderList = orderRepo.findOrdersByUserIdAndStatus(userId, "OPEN");
+        Order currentOrder;
+        if(orderList.isEmpty()){
+            throw new RuntimeException();
+        } else {
+            currentOrder = orderList.get(0);
+        }
+        currentOrder.setStatus("CLOSED");
+        orderRepo.save(currentOrder);
+        return currentOrder;
+    }
+
 }
