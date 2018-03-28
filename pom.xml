@@ -23,7 +23,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<hibernate.version>5.2.12.Final</hibernate.version>
 		<postgresql.version>42.1.1</postgresql.version>
-		<appName>shitwish-order</appName>
+		<appName>shitwish-order-service</appName>
 		<full-artifact-name>target/${project.artifactId}-${project.version}.jar</full-artifact-name>
 	</properties>
 
@@ -77,7 +77,7 @@
 				<artifactId>heroku-maven-plugin</artifactId>
 				<version>1.1.1</version>
 				<configuration>
-					<appName>shitwish-order</appName>
+					<appName>shitwish-order-service</appName>
 					<includeTarget>false</includeTarget>
 					<includes>
 						<include>${basedir}/${full-artifact-name}</include>

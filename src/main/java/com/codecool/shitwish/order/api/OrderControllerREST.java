@@ -34,4 +34,10 @@ public class OrderControllerREST {
         Order order = orderService.closeOrder(userId);
         return ResponseEntity.ok(order);
     }
+
+    @GetMapping("/get-active-order/{userId}")
+    public ResponseEntity getActiveOrder(@PathVariable Long userId) {
+        Order order = orderService.getActiveOrder(userId);
+        return ResponseEntity.ok(order);
+    }
 }

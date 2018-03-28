@@ -15,45 +15,40 @@ public class OrderService {
 
     public Order addProductToOrder(Long productId,Long userId){
 
-        List<Order> orderList = orderRepo.findOrdersByUserIdAndStatus(userId, "OPEN");
-        Order currentOrder;
-        if(orderList.isEmpty()){
-            currentOrder = new Order(userId);
-        } else {
-            currentOrder = orderList.get(0);
+        Order order = orderRepo.findOrderByUserIdAndStatus(userId, "OPEN");
+        if(order == null){
+            order = new Order(userId);
         }
-        currentOrder.addProductId(productId);
-        orderRepo.save(currentOrder);
-        return currentOrder;
+        order.addProductId(productId);
+        orderRepo.save(order);
+        return order;
     }
 
 
     public Order deleteProductFromOrder(Long productId,Long userId){
 
-        List<Order> orderList = orderRepo.findOrdersByUserIdAndStatus(userId, "OPEN");
+        Order order = orderRepo.findOrderByUserIdAndStatus(userId, "OPEN");
         Order currentOrder;
-        if(orderList.isEmpty()){
+        if(order == null){
             throw new RuntimeException();
-        } else {
-            currentOrder = orderList.get(0);
         }
-        currentOrder.removeProductId(productId);
-        orderRepo.save(currentOrder);
-        return currentOrder;
+        order.removeProductId(productId);
+        orderRepo.save(order);
+        return order;
     }
 
     public Order closeOrder(Long userId){
-        List<Order> orderList = orderRepo.findOrdersByUserIdAndStatus(userId, "OPEN");
-        Order currentOrder;
-        if(orderList.isEmpty()){
+        Order order = orderRepo.findOrderByUserIdAndStatus(userId, "OPEN");
+        if(order == null){
             throw new RuntimeException();
-        } else {
-            currentOrder = orderList.get(0);
         }
-        currentOrder.setStatus("CLOSED");
-        orderRepo.save(currentOrder);
-        return currentOrder;
+        order.setStatus("CLOSED");
+        orderRepo.save(order);
+        return order;
     }
 
+    public Order getActiveOrder(Long userId) {
+        return orderRepo.findOrderByUserIdAndStatus(userId, "OPEN");
+    }
 }
 
